@@ -163,7 +163,7 @@ export default function Products({ props }) {
                   />
                 </Svg>
               </View>
-              <Text style={styles.catTitle}>phones</Text>
+              <Text style={styles.catTitle}>computer</Text>
             </View>
             <View style={styles.catCardContainer}>
               <View style={styles.catCard}>
@@ -181,7 +181,7 @@ export default function Products({ props }) {
                   />
                 </Svg>
               </View>
-              <Text style={styles.catTitle}>phones</Text>
+              <Text style={styles.catTitle}>Health</Text>
             </View>
             <View style={styles.catCardContainer}>
               <View style={styles.catCard}>
@@ -222,7 +222,7 @@ export default function Products({ props }) {
                   />
                 </Svg>
               </View>
-              <Text style={styles.catTitle}>phones</Text>
+              <Text style={styles.catTitle}>Books</Text>
             </View>
             <View style={styles.catCardContainer}>
               <View style={styles.catCard}>
@@ -542,9 +542,10 @@ const styles = StyleSheet.create({
   catTitle: {
     marginTop: 7,
     fontFamily: "Inter_500Medium",
-    fontSize: 15,
+    fontSize: 13,
     alignSelf: "center",
     color: "#010035",
+    textTransform: "capitalize",
   },
   searchSection: {
     flexDirection: "row",
