@@ -25,7 +25,7 @@ export default function App() {
 //       
 //     </View>
       <NavigationContainer>
-        <StatusBar style="auto" />
+        <StatusBar backgroundColor="#E5E5E5" />
       <Stack.Navigator  screenOptions={{
           headerShown: false,
         }}>
