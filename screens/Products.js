@@ -30,9 +30,18 @@ import {
   useDisclose,
   Center,
   NativeBaseProvider,
+  Box,
+  Flex,
+  CloseIcon,
+  Select,
+  CheckIcon,
 } from "native-base"
 export default function Products({ props }) {
-  const [number, onChangeNumber] = React.useState(null);
+  const [text, setText] = React.useState('');
+  const [shouldOverlapWithTrigger] = React.useState(false)
+  const [position, setPosition] = React.useState("auto")
+  let [service, setService] = React.useState("")
+  let [price, setPrice] = React.useState("")
   const { isOpen, onOpen, onClose } = useDisclose()
   let [fontsLoaded] = useFonts({
     Inter_100Thin,
@@ -279,8 +288,8 @@ export default function Products({ props }) {
             <View>
               <TextInput
                 style={styles.input}
-                onChangeText={onChangeNumber}
-                value={number}
+                onChangeText={text=>setText(text)}
+                value={text}
                 placeholder="search"
               />
               <Svg
@@ -477,11 +486,97 @@ export default function Products({ props }) {
 
 
 
-      <Actionsheet isOpen={isOpen} onClose={onClose}>
-        <Actionsheet.Content  style={{borderTopRightRadius:30 , borderTopLeftRadius:30 , height:Dimensions.get('screen').height-500}}>
-          <Actionsheet.Item>Option 1</Actionsheet.Item>
-          <Actionsheet.Item>Option 2</Actionsheet.Item>
-          <Actionsheet.Item>Option 3</Actionsheet.Item>
+      <Actionsheet isOpen={isOpen} onClose={onClose} >
+        <Actionsheet.Content  style={{padding:0,backgroundColor:"#FFFFFF",borderTopRightRadius:30 , borderTopLeftRadius:30 }}>
+        <Flex
+            direction="row"
+           px="5"
+            justifyContent="space-between"
+style={{width:"100%"}}
+          >
+            <Button style={styles.closeSheet} onPress={onClose}>
+            <Svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+<Line x1="1.41421" y1="1" x2="10" y2="9.58579" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<Line x1="1.41421" y1="1" x2="10" y2="9.58579" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<Line x1="1.41421" y1="1" x2="10" y2="9.58579" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<Line x1="1" y1="9.58579" x2="9.58579" y2="1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<Line x1="1" y1="9.58579" x2="9.58579" y2="1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<Line x1="1" y1="9.58579" x2="9.58579" y2="1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</Svg>
+
+            </Button>
+            <Text style={styles.filterOptions}>Filter options</Text>
+            <Button style={styles.doneSheet} onPress={onClose}>
+          <Text style={styles.doneSheetText}>Done</Text>
+            </Button>
+         </Flex>
+
+          <Actionsheet.Item mt="10" >
+          <Text style={styles.brand}> Brand </Text>
+          <Select
+        selectedValue={service}
+        minWidth="337"
+        accessibilityLabel="Choose Service"
+        placeholder="Choose Service"
+        _selectedItem={{
+          bg: "teal.600",
+          endIcon: <CheckIcon size="5" />,
+        }}
+        mt={1}
+        mb={2}
+        onValueChange={(itemValue) => setService(itemValue)}
+      >
+        <Select.Item label="UX Research" value="ux" />
+        <Select.Item label="Web Development" value="web" />
+        <Select.Item label="Cross Platform Development" value="cross" />
+        <Select.Item label="UI Designing" value="ui" />
+        <Select.Item label="Backend Development" value="backend" />
+      </Select>
+
+          <Text style={styles.brand}> Price  </Text>
+          <Select
+        selectedValue={price}
+        minWidth="337"
+        accessibilityLabel="Choose Service"
+        placeholder="Choose Service"
+        _selectedItem={{
+          bg: "teal.600",
+          endIcon: <CheckIcon size="5" />,
+        }}
+        mt={1}
+        mb={2}
+        onValueChange={(price) => setPrice(price)}
+      >
+        <Select.Item label="UX Research" value="ux" />
+        <Select.Item label="Web Development" value="web" />
+        <Select.Item label="Cross Platform Development" value="cross" />
+        <Select.Item label="UI Designing" value="ui" />
+        <Select.Item label="Backend Development" value="backend" />
+      </Select>
+
+          <Text style={styles.brand}> Size </Text>
+          <Select
+        selectedValue={service}
+        minWidth="337"
+        accessibilityLabel="Choose Service"
+        placeholder="Choose Service"
+        _selectedItem={{
+          bg: "teal.600",
+          endIcon: <CheckIcon size="5" />,
+        }}
+        mt={1}
+        mb={2}
+        onValueChange={(itemValue) => setService(itemValue)}
+      >
+        <Select.Item label="UX Research" value="ux" />
+        <Select.Item label="Web Development" value="web" />
+        <Select.Item label="Cross Platform Development" value="cross" />
+        <Select.Item label="UI Designing" value="ui" />
+        <Select.Item label="Backend Development" value="backend" />
+      </Select>
+          </Actionsheet.Item>
+
+          
         </Actionsheet.Content>
       </Actionsheet>
       </View>
@@ -710,5 +805,36 @@ marginLeft:7
 fontSize:10,
 fontFamily:"Inter_400Regular",
 marginTop:5
+  },
+  closeSheet: {
+    backgroundColor:"#010035",
+    width:37,
+    height:37,
+    borderRadius:10
+  },
+  doneSheet: {
+    backgroundColor:"#FF6E4E",
+    width:86,
+    height:37,
+    borderRadius:10,
+  //  marginLeft:30
+  },
+  doneSheetText: {
+    color:"#FFFFFF",
+    fontSize: 18,
+    fontFamily: "Inter_500Medium",
+  
+  },
+  filterOptions: {
+    color: "#010035",
+    fontSize: 18,
+    fontFamily: "Inter_500Medium",
+    alignSelf:'center',
+  },
+ brand: {
+    color: "#010035",
+    fontSize: 18,
+    fontFamily: "Inter_500Medium",
+
   }
 });
