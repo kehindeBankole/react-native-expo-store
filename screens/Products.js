@@ -24,8 +24,16 @@ import {
   Inter_800ExtraBold,
   Inter_900Black,
 } from "@expo-google-fonts/inter";
+import {
+  Button,
+  Actionsheet,
+  useDisclose,
+  Center,
+  NativeBaseProvider,
+} from "native-base"
 export default function Products({ props }) {
   const [number, onChangeNumber] = React.useState(null);
+  const { isOpen, onOpen, onClose } = useDisclose()
   let [fontsLoaded] = useFonts({
     Inter_100Thin,
     Inter_200ExtraLight,
@@ -293,8 +301,11 @@ export default function Products({ props }) {
                 />
               </Svg>
             </View>
-            <View
+            {/* <Button onPress={onOpen}>Actionsheet</Button> */}
+
+            <Button
               style={{ ...styles.searchButton, backgroundColor: "#FF6E4E" }}
+              onPress={onOpen}
             >
               <Svg
                 width="16"
@@ -336,7 +347,7 @@ export default function Products({ props }) {
                   fill="white"
                 />
               </Svg>
-            </View>
+            </Button> 
           </View>
 
           <View style={{ ...styles.selectSection, marginTop: 24 }}>
@@ -463,6 +474,16 @@ export default function Products({ props }) {
             </Svg>
           </View>
         </View>
+
+
+
+      <Actionsheet isOpen={isOpen} onClose={onClose}>
+        <Actionsheet.Content  style={{borderTopRightRadius:30 , borderTopLeftRadius:30 , height:Dimensions.get('screen').height-500}}>
+          <Actionsheet.Item>Option 1</Actionsheet.Item>
+          <Actionsheet.Item>Option 2</Actionsheet.Item>
+          <Actionsheet.Item>Option 3</Actionsheet.Item>
+        </Actionsheet.Content>
+      </Actionsheet>
       </View>
     );
   }

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
+import { Box, Center, NativeBaseProvider } from "native-base"
 export default function Landing({navigation}) {
   let [fontsLoaded] = useFonts({
     Inter_900Black,
