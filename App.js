@@ -5,6 +5,7 @@ import Landing from './screens/Landing'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Products from './screens/Products';
+import Cart from './screens/Cart';
 import { NativeBaseProvider, Box } from 'native-base';
 
 function HomeScreen() {
@@ -20,18 +21,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-//     <View style={styles.container}>
-//  <Landing/>
-//       
-//     </View>
       <NavigationContainer>
-        {/* <StatusBar backgroundColor="#E5E5E5" />
-      <Stack.Navigator  screenOptions={{
-          headerShown: false,
-        }}>
-      <Stack.Screen name="Home" component={Landing} />
-      <Stack.Screen name="Product" component={Products} />
-      </Stack.Navigator> */}
       <NativeBaseProvider>
       <StatusBar backgroundColor="#E5E5E5" />
       <Stack.Navigator  screenOptions={{
@@ -39,6 +29,7 @@ export default function App() {
         }}>
       <Stack.Screen name="Home" component={Landing} />
       <Stack.Screen name="Product" component={Products} />
+      <Stack.Screen name="Cart" component={Cart} />
       </Stack.Navigator> 
     </NativeBaseProvider>
     </NavigationContainer>
