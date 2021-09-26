@@ -10,6 +10,8 @@ import {
   StatusBar,
   TouchableOpacity,
   FlatList,
+  Animated,
+  Pressable,
 } from "react-native";
 import Svg, { Circle, Rect, Path, Line } from "react-native-svg";
 import {
@@ -34,6 +36,22 @@ import {
   Box,
   Center,
 } from "native-base";
+import { TabView, SceneMap } from 'react-native-tab-view';
+import Constants from 'expo-constants';
+
+const FirstRoute = () => <Center flex={1}>This is Tab 1</Center>;
+
+const SecondRoute = () => <Center flex={1}>This is Tab 2</Center>;
+
+const ThirdRoute = () => <Center flex={1}>This is Tab 3</Center>;
+
+const initialLayout = { width: Dimensions.get('window').width };
+
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute,
+  third: ThirdRoute,
+});
 
 export default function Cart({ navigation, route }) {
   const { id } = route.params;
@@ -60,6 +78,49 @@ export default function Cart({ navigation, route }) {
     Inter_800ExtraBold,
     Inter_900Black,
   });
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: 'first', title: 'Shop' },
+    { key: 'second', title: 'Details' },
+    { key: 'third', title: 'Features' },
+  ]);
+
+
+  const renderTabBar = (props) => {
+    const inputRange = props.navigationState.routes.map((x, i) => i);
+    return (
+      <Box flexDirection="row">
+        {props.navigationState.routes.map((route, i) => {
+          const opacity = props.position.interpolate({
+            inputRange,
+            outputRange: inputRange.map((inputIndex) =>
+              inputIndex === i ? 1 : 0.5
+            ),
+          });
+          const color = index === i ? '#010035' : 'rgba(0, 0, 0, 0.5)';
+          const borderColor = index === i ? '#FF6E4E' : 'coolGray.200';
+          const fontFamily = index === i ? 'Inter_700Bold' : 'Inter_400Regular';
+          return (
+            <Box
+              borderBottomWidth="3"
+              borderColor={borderColor}
+              flex={1}
+              alignItems="center"
+              p="3"
+              cursor="pointer">
+              <Pressable
+                onPress={() => {
+                  console.log(i);
+                  setIndex(i);
+                }}>
+                <Animated.Text style={{color ,  fontSize:20,fontFamily}}>{route.title}</Animated.Text>
+              </Pressable>
+            </Box>
+          );
+        })}
+      </Box>
+    );
+  };
   if (!fontsLoaded) {
     return <Text>loading</Text>;
   } else {
@@ -254,6 +315,14 @@ export default function Cart({ navigation, route }) {
                 </Svg>
               </Button>
             </Flex>
+            <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        renderTabBar={renderTabBar}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+        style={{ marginTop: 10 }}
+      />
           </View>
         </View>
       );
@@ -332,6 +401,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     marginTop: 14,
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
