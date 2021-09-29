@@ -36,6 +36,7 @@ export default function Products({ props, navigation }) {
   const [text, setText] = React.useState("");
   const [location, setLocation] = React.useState({ city: "", country: "" });
   const [products, setProducts] = React.useState([]);
+  const[limit,setLimit] = React.useState(4)
   const [shouldOverlapWithTrigger] = React.useState(false);
   const [position, setPosition] = React.useState("auto");
   let [service, setService] = React.useState("");
@@ -60,14 +61,14 @@ export default function Products({ props, navigation }) {
     setLocation({ city: f.city, country: f.country_name });
   }
   async function getProducts() {
-    let g = await fetch("https://fakestoreapi.com/products");
+    let g = await fetch(`https://fakestoreapi.com/products?limit=${limit}`);
     let f = await g.json();
     setProducts(f);
     console.log(f.length);
   }
   React.useEffect(() => {
     getProducts();
-  }, []);
+  }, [limit]);
   React.useEffect(() => {
     getLocation();
   }, []);
@@ -400,62 +401,11 @@ export default function Products({ props, navigation }) {
           </View>
           <View style={{ ...styles.selectSection, marginTop: 24 }}>
             <Text style={styles.selectText}>Best Seller</Text>
-            <Text style={styles.viewText}>see more</Text>
+            {limit>4 ? <Button onPress={()=>setLimit(4)}style={{backgroundColor:"transparent"}}><Text style={styles.viewText}>see less</Text></Button>:      <Button onPress={()=>setLimit(20)}style={{backgroundColor:"transparent"}}><Text style={styles.viewText}>see more</Text></Button> }
+      
           </View>
 
           <View style={styles.bestPhones}>
-            {/* <View style={styles.phoneCard}>
-        <Image
-              style={{ width:'100%' , marginTop:5 }}
-              source={require("../assets/images/samsung.png")}
-            />
-         <View style={{marginTop:2}}>
-         <View style={{flexDirection:'row'}}>
-          <Text style={styles.mainPrice}>$1,047</Text>
-          <Text style={styles.slashPrice}>$1,500</Text>
-          </View>
-          <Text style={styles.productTitle}>Samsung Galaxy s20 Ultra</Text>
-         </View>
-        </View> */}
-            {/* <View style={styles.phoneCard}>
-        <Image
-              style={{ width:'100%' , marginTop:5 }}
-              source={require("../assets/images/xiaomi.png")}
-            />
-                     <View style={{marginTop:2}}>
-         <View style={{flexDirection:'row'}}>
-          <Text style={styles.mainPrice}>$1,047</Text>
-          <Text style={styles.slashPrice}>$1,500</Text>
-          </View>
-          <Text style={styles.productTitle}>Samsung Galaxy s20 Ultra</Text>
-         </View>
-        </View> */}
-            {/* <View style={styles.phoneCard}>
-        <Image
-              style={{ width:'100%' , marginTop:5 }}
-              source={require("../assets/images/galaxy.png")}
-            />
-                     <View style={{marginTop:2}}>
-         <View style={{flexDirection:'row'}}>
-          <Text style={styles.mainPrice}>$1,047</Text>
-          <Text style={styles.slashPrice}>$1,500</Text>
-          </View>
-          <Text style={styles.productTitle}>Samsung Galaxy s20 Ultra</Text>
-         </View>
-        </View> */}
-            {/* <View style={styles.phoneCard}>
-        <Image
-              style={{ width:'100%' , marginTop:5 }}
-              source={require("../assets/images/motorola.png")}
-            />
-                     <View style={{marginTop:2}}>
-         <View style={{flexDirection:'row'}}>
-          <Text style={styles.mainPrice}>$1,047</Text>
-          <Text style={styles.slashPrice}>$1,500</Text>
-          </View>
-          <Text style={styles.productTitle}>Samsung Galaxy s20 Ultra</Text>
-         </View>
-        </View> */}
 
             {
               <FlatList
